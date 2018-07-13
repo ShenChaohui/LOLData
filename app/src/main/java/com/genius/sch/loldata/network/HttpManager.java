@@ -21,7 +21,7 @@ public class HttpManager {
      * @param context
      */
     public static void getHeroListData(final Handler handler, final Context context) {
-
+//        http://yz.lol.qq.com/v1/zh_cn/search/index.json
 
     }
 }
