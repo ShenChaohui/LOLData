@@ -3,9 +3,10 @@ package com.genius.sch.loldata.network;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.genius.sch.loldata.database.dao.HeroInfoJsonDao;
-import com.genius.sch.loldata.entity.HeroInfoJson;
+import com.genius.sch.loldata.entity.HeroInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,13 +38,13 @@ public class HttpManager {
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
                     for (int i = 0; i < champions.length(); i++) {
-                        HeroInfoJson heroInfoJsonObj = new HeroInfoJson();
                         JSONObject heroInfoJson = champions.getJSONObject(i);
                         String name = heroInfoJson.getString("name");
-                        String heroInfo = champions.getJSONObject(i).toString();
-                        heroInfoJsonObj.setHeroName(name);
-                        heroInfoJsonObj.setHeroInfoJson(heroInfo);
-                        dao.save(heroInfoJsonObj);
+                        String slug = heroInfoJson.getString("slug");
+                        String faction = heroInfoJson.getString("associated-faction-slug");
+                        String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
+                        HeroInfo heroInfo = new HeroInfo(name, slug, imUrl, faction);
+                        dao.save(heroInfo);
                     }
                     Message msg = new Message();
                     msg.what = 200;
@@ -51,13 +52,16 @@ public class HttpManager {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("JSONException",e.toString());
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    Log.e("SQLException",e.toString());
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("onError",ex.toString());
 
             }
 

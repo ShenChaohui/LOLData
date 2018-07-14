@@ -17,7 +17,7 @@ import android.widget.ListView;
 import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.adapter.HeroListAdapter;
 import com.genius.sch.loldata.database.dao.HeroInfoJsonDao;
-import com.genius.sch.loldata.entity.HeroInfoJson;
+import com.genius.sch.loldata.entity.HeroInfo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ListView lvHeroList;
     private HeroListAdapter adapter;
-    private ArrayList<HeroInfoJson> heroInfoJsons;
+    private ArrayList<HeroInfo> heroInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity
         lvHeroList = findViewById(R.id.lv_main);
         HeroInfoJsonDao dao = new HeroInfoJsonDao(this);
         try {
-            heroInfoJsons = (ArrayList<HeroInfoJson>) dao.queryAll();
+            heroInfos = (ArrayList<HeroInfo>) dao.queryAll();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        adapter = new HeroListAdapter(this, heroInfoJsons);
+        adapter = new HeroListAdapter(this, heroInfos);
         lvHeroList.setAdapter(adapter);
 
     }

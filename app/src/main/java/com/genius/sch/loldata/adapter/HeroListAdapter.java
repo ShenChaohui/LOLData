@@ -12,20 +12,14 @@ import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.Utils.GsonTtils;
 import com.genius.sch.loldata.Utils.ImageUtils;
 import com.genius.sch.loldata.entity.HeroInfo;
-import com.genius.sch.loldata.entity.HeroInfoJson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class HeroListAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<HeroInfoJson> data;
+    private ArrayList<HeroInfo> data;
 
-    public HeroListAdapter(Context context, ArrayList<HeroInfoJson> data) {
+    public HeroListAdapter(Context context, ArrayList<HeroInfo> data) {
         this.context = context;
         this.data = data;
     }
@@ -57,9 +51,8 @@ public class HeroListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        String heroInfoJson = data.get(i).getHeroInfoJson();
-        HeroInfo heroInfo = GsonTtils.parseJsonWithGson(heroInfoJson, HeroInfo.class);
-        ImageUtils.bindImageByUrl(viewHolder.im,heroInfo.getImage().getUri());
+        HeroInfo heroInfo = data.get(i);
+        ImageUtils.bindImageByUrl(viewHolder.im, heroInfo.getImUrl());
         viewHolder.tv.setText(heroInfo.getName());
         return view;
     }
