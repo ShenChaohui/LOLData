@@ -10,7 +10,7 @@ public class HeroInfoJson {
     @DatabaseField
     private String heroName;
     @DatabaseField
-    private String heroInfo;
+    private String heroInfoJson;
 
     public int getId() {
         return id;
@@ -28,11 +28,11 @@ public class HeroInfoJson {
         this.heroName = heroName;
     }
 
-    public String getHeroInfo() {
-        return heroInfo;
+    public String getHeroInfoJson() {
+        return heroInfoJson;
     }
 
-    public void setHeroInfo(String heroInfo) {
-        this.heroInfo = heroInfo;
+    public void setHeroInfoJson(String heroInfoJson) {
+        this.heroInfoJson = heroInfoJson;
     }
 }

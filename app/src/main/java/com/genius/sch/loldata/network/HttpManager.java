@@ -33,6 +33,7 @@ public class HttpManager {
             public void onSuccess(String result) {
                 try {
                     HeroInfoJsonDao dao = new HeroInfoJsonDao(context);
+                    //先清空数据库
                     dao.deleteAll();
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
@@ -42,7 +43,7 @@ public class HttpManager {
                         String name = heroInfoJson.getString("name");
                         String heroInfo = champions.getJSONObject(i).toString();
                         heroInfoJsonObj.setHeroName(name);
-                        heroInfoJsonObj.setHeroInfo(heroInfo);
+                        heroInfoJsonObj.setHeroInfoJson(heroInfo);
                         dao.save(heroInfoJsonObj);
                     }
                     Message msg = new Message();
