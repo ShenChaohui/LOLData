@@ -27,7 +27,7 @@ public class HttpManager {
      * @param context
      */
     public static void getHeroListData(final Handler handler, final Context context) {
-        RequestParams params = new RequestParams(Urls.getHeroList);
+        RequestParams params = new RequestParams(Urls.HeroList);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

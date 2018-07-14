@@ -3,8 +3,10 @@ package com.genius.sch.loldata.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 @DatabaseTable
-public class HeroInfo {
+public class HeroInfo implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField

@@ -16,6 +16,7 @@ public class WelcomeActivity extends AppCompatActivity {
             super.handleMessage(msg);
             if(msg.what == 200){
                 startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+                finish();
             }
         }
     };
