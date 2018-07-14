@@ -6,21 +6,26 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 
 @DatabaseTable
-public class HeroInfo {
+public class HeroInfo implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
-    private String name;
+    private String name;//中文名
     @DatabaseField
-    private String slug;
+    private String slug;//英文名
     @DatabaseField
-    private String imUrl;
+    private String imUrl;//原画
     @DatabaseField
-    private String faction;
+    private String faction;//地区
     @DatabaseField
-    private String story;
+    private String biography;//传记
     @DatabaseField
-    private String title;
+    private String introduce;//简介
+    @DatabaseField
+    private String quote;//引述
+
+    @DatabaseField
+    private String title;//辛德拉
 
     public HeroInfo() {
     }
@@ -72,12 +77,12 @@ public class HeroInfo {
         this.slug = slug;
     }
 
-    public String getStory() {
-        return story;
+    public String getBiography() {
+        return biography;
     }
 
-    public void setStory(String story) {
-        this.story = story;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     public String getTitle() {
@@ -86,5 +91,21 @@ public class HeroInfo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getQuote() {
+        return quote;
+    }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 }

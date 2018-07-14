@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, HeroDetailActivity.class);
-                intent.putExtra("heroInfoName", heroInfos.get(i).getName());
+                intent.putExtra("heroInfo", heroInfos.get(i));
                 startActivity(intent);
             }
         });

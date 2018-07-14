@@ -21,7 +21,7 @@ public class HttpManager {
 
 
     /**
-     * 获取英雄列表
+     * 获取所有英雄
      *
      * @param handler
      * @param context
@@ -45,11 +45,11 @@ public class HttpManager {
                         String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
                         HeroInfo heroInfo = new HeroInfo(name, slug, imUrl, faction);
                         dao.save(heroInfo);
+                        getHeroDetail(handler, dao, heroInfo);
                     }
-                    Message msg = new Message();
-                    msg.what = 200;
-                    handler.sendMessage(msg);
-
+                    Message message = new Message();
+                    message.what = 200;
+                    handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("JSONException", e.toString());
@@ -77,25 +77,33 @@ public class HttpManager {
         });
     }
 
-    public static void getHeroDetail(final Handler handler, final Context context, final HeroInfo heroInfo) {
+    /**
+     * 获取英雄详情数据
+     *
+     * @param handler
+     * @param dao
+     * @param heroInfo
+     */
+    private static void getHeroDetail(final Handler handler, final HeroInfoDao dao, final HeroInfo heroInfo) {
         RequestParams params = new RequestParams(Urls.getHeroDetails(heroInfo.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                HeroInfoDao dao = new HeroInfoDao(context);
-
                 try {
                     JSONObject object = new JSONObject(result);
                     JSONObject champion = object.getJSONObject("champion");
+                    String title = champion.getString("title");
+
                     JSONObject biography = champion.getJSONObject("biography");
                     String full = biography.getString("full");
-                    String title = champion.getString("title");
-                    heroInfo.setStory(full);
+                    String _short = biography.getString("short");
+                    String quote = biography.getString("quote");
+                    heroInfo.setBiography(full);
+                    heroInfo.setIntroduce(_short);
+                    heroInfo.setQuote(quote);
                     heroInfo.setTitle(title);
                     dao.update(heroInfo);
-                    Message message = new Message();
-                    message.what = 200;
-                    handler.sendMessage(message);
+
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -119,7 +127,5 @@ public class HttpManager {
 
             }
         });
-
-
     }
 }
