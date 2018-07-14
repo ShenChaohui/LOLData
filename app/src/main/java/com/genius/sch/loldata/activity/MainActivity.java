@@ -3,6 +3,7 @@ package com.genius.sch.loldata.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,12 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.genius.sch.loldata.R;
+import com.genius.sch.loldata.database.dao.HeroInfoJsonDao;
+import com.genius.sch.loldata.entity.HeroInfoJson;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private ListView lvHeroList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,22 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        /***************************************************************************/
+        lvHeroList = findViewById(R.id.lv_main);
+        ArrayList<String> heroNameList = new ArrayList<>();
+        HeroInfoJsonDao dao = new HeroInfoJsonDao(this);
+        try {
+            ArrayList<HeroInfoJson> heroInfoJsons = (ArrayList<HeroInfoJson>) dao.queryAll();
+            for(int i = 0;i<heroInfoJsons.size();i++){
+                heroNameList.add(heroInfoJsons.get(i).getHeroName());
+            }
+            Log.e("test",heroNameList.size()+"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,heroNameList);
+        lvHeroList.setAdapter(adapter);
+
     }
 
     @Override

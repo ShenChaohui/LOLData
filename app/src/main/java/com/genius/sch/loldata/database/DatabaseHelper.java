@@ -3,8 +3,7 @@ package com.genius.sch.loldata.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.genius.sch.loldata.entity.HeroInfo;
-import com.genius.sch.loldata.entity.HeroInfoJSON;
+import com.genius.sch.loldata.entity.HeroInfoJson;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -32,7 +31,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, HeroInfoJSON.class);
+            TableUtils.createTable(connectionSource, HeroInfoJson.class);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,7 +42,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, HeroInfoJSON.class, true);
+            TableUtils.dropTable(connectionSource, HeroInfoJson.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
