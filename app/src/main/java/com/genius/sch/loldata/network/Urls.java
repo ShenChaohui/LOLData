@@ -1,5 +1,5 @@
 package com.genius.sch.loldata.network;
 
 public class Urls {
-    public static String getHeroList = "https://ddragon.leagueoflegends.com/cdn/6.24.1/data/zh_CN/champion.json";
+    public static String getHeroList = "http://yz.lol.qq.com/v1/zh_cn/search/index.json";
 }

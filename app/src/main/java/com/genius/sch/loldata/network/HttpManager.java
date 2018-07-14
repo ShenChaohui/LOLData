@@ -26,8 +26,7 @@ public class HttpManager {
      * @param context
      */
     public static void getHeroListData(final Handler handler, final Context context) {
-//        http://yz.lol.qq.com/v1/zh_cn/search/index.json
-        RequestParams params = new RequestParams("http://yz.lol.qq.com/v1/zh_cn/search/index.json");
+        RequestParams params = new RequestParams(Urls.getHeroList);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
