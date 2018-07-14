@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.genius.sch.loldata.database.dao.HeroInfoJsonDao;
+import com.genius.sch.loldata.database.dao.HeroInfoDao;
 import com.genius.sch.loldata.entity.HeroInfo;
 
 import org.json.JSONArray;
@@ -27,12 +27,12 @@ public class HttpManager {
      * @param context
      */
     public static void getHeroListData(final Handler handler, final Context context) {
-        RequestParams params = new RequestParams(Urls.HeroList);
+        RequestParams params = new RequestParams(Urls.HEROLIST);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
-                    HeroInfoJsonDao dao = new HeroInfoJsonDao(context);
+                    HeroInfoDao dao = new HeroInfoDao(context);
                     //先清空数据库
                     dao.deleteAll();
                     JSONObject obj = new JSONObject(result);
@@ -52,16 +52,16 @@ public class HttpManager {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("JSONException",e.toString());
+                    Log.e("JSONException", e.toString());
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    Log.e("SQLException",e.toString());
+                    Log.e("SQLException", e.toString());
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("onError",ex.toString());
+                Log.e("onError", ex.toString());
 
             }
 
@@ -75,5 +75,51 @@ public class HttpManager {
 
             }
         });
+    }
+
+    public static void getHeroDetail(final Handler handler, final Context context, final HeroInfo heroInfo) {
+        RequestParams params = new RequestParams(Urls.getHeroDetails(heroInfo.getSlug()));
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                HeroInfoDao dao = new HeroInfoDao(context);
+
+                try {
+                    JSONObject object = new JSONObject(result);
+                    JSONObject champion = object.getJSONObject("champion");
+                    JSONObject biography = champion.getJSONObject("biography");
+                    String full = biography.getString("full");
+                    String title = champion.getString("title");
+                    heroInfo.setStory(full);
+                    heroInfo.setTitle(title);
+                    dao.update(heroInfo);
+                    Message message = new Message();
+                    message.what = 200;
+                    handler.sendMessage(message);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
     }
 }

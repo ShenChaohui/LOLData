@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 
 @DatabaseTable
-public class HeroInfo implements Serializable {
+public class HeroInfo {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
@@ -17,6 +17,10 @@ public class HeroInfo implements Serializable {
     private String imUrl;
     @DatabaseField
     private String faction;
+    @DatabaseField
+    private String story;
+    @DatabaseField
+    private String title;
 
     public HeroInfo() {
     }
@@ -66,5 +70,21 @@ public class HeroInfo implements Serializable {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -8,8 +8,8 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
-public class HeroInfoJsonDao extends BaseDao<HeroInfo, Integer> {
-    public HeroInfoJsonDao(Context context) {
+public class HeroInfoDao extends BaseDao<HeroInfo, Integer> {
+    public HeroInfoDao(Context context) {
         super(context);
     }
 
