@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_herodetail"
+                    android:id="@+id/iv_championdetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -35,7 +35,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_herodetail_heroName"
+                        android:id="@+id/tv_championdetail_champion_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#937301"
@@ -43,7 +43,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_herodetail_heroTitle"
+                        android:id="@+id/tv_championdetail_champion_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -55,7 +55,7 @@
 
 
             <TextView
-                android:id="@+id/tv_herodetail_introduce"
+                android:id="@+id/tv_championdetail_champion_introduce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
@@ -63,7 +63,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/btn_herodetail_readBiography"
+                android:id="@+id/btn_championdetail_readbiography"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="阅读传记 →" />

@@ -25,6 +25,8 @@
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"></activity>
         <activity android:name=".activity.ChampionDetailActivity"></activity>
+        <activity android:name=".activity.ChampionBiographyActivity"
+            android:label="英雄传记"></activity>
     </application>
 
 </manifest>

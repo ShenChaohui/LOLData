@@ -83,27 +83,27 @@ public class HttpManager {
      * 获取英雄详情数据
      *
      * @param dao
-     * @param heroInfo
+     * @param champion
      */
-    private static void getChampionDetail(final ChampionDao dao, final Champion heroInfo) {
-        RequestParams params = new RequestParams(Urls.getHeroDetails(heroInfo.getSlug()));
+    private static void getChampionDetail(final ChampionDao dao, final Champion champion) {
+        RequestParams params = new RequestParams(Urls.getHeroDetails(champion.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    JSONObject champion = object.getJSONObject("champion");
-                    String title = champion.getString("title");
+                    JSONObject championObj = object.getJSONObject("champion");
+                    String title = championObj.getString("title");
 
-                    JSONObject biography = champion.getJSONObject("biography");
+                    JSONObject biography = championObj.getJSONObject("biography");
                     String full = biography.getString("full");
                     String _short = biography.getString("short");
                     String quote = biography.getString("quote");
-                    heroInfo.setBiography(full);
-                    heroInfo.setIntroduce(_short);
-                    heroInfo.setQuote(quote);
-                    heroInfo.setTitle(title);
-                    dao.update(heroInfo);
+                    champion.setBiography(full);
+                    champion.setIntroduce(_short);
+                    champion.setQuote(quote);
+                    champion.setTitle(title);
+                    dao.update(champion);
 
 
                 } catch (SQLException e) {

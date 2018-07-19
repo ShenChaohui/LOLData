@@ -14,9 +14,9 @@ import org.xutils.x;
 
 public class ChampionDetailActivity extends BaseActivity implements View.OnClickListener {
     private ImageView iv;
-    private TextView tvHeroShort;
-    private TextView tvHeroName;
-    private TextView tvHeroTitle;
+    private TextView tvChampionIntroduce;
+    private TextView tvChampionName;
+    private TextView tvChampionTitle;
     private Button btnReadBiography;
 
 
@@ -30,11 +30,11 @@ public class ChampionDetailActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initView() {
         initTitle();
-        iv = findViewById(R.id.iv_herodetail);
-        tvHeroShort = findViewById(R.id.tv_herodetail_introduce);
-        tvHeroName = findViewById(R.id.tv_herodetail_heroName);
-        tvHeroTitle = findViewById(R.id.tv_herodetail_heroTitle);
-        btnReadBiography = findViewById(R.id.btn_herodetail_readBiography);
+        iv = findViewById(R.id.iv_championdetail);
+        tvChampionIntroduce = findViewById(R.id.tv_championdetail_champion_introduce);
+        tvChampionName = findViewById(R.id.tv_championdetail_champion_name);
+        tvChampionTitle = findViewById(R.id.tv_championdetail_champion_title);
+        btnReadBiography = findViewById(R.id.btn_championdetail_readbiography);
         btnReadBiography.setOnClickListener(this);
     }
 
@@ -43,18 +43,19 @@ public class ChampionDetailActivity extends BaseActivity implements View.OnClick
         Intent intent = getIntent();
         champion = (Champion) intent.getSerializableExtra("champion");
         getSupportActionBar().setTitle(champion.getName());
-        tvHeroName.setText(champion.getName());
+        tvChampionName.setText(champion.getName());
         x.image().bind(iv, champion.getImUrl());
-        tvHeroTitle.setText(champion.getTitle());
-        tvHeroShort.setText(champion.getIntroduce());
+        tvChampionTitle.setText(champion.getTitle());
+        tvChampionIntroduce.setText(champion.getIntroduce());
     }
 
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btn_herodetail_readBiography){
-            Intent intent = new Intent(context,ChampionBiography.class);
+        if (view.getId() == R.id.btn_championdetail_readbiography) {
+            Intent intent = new Intent(context, ChampionBiographyActivity.class);
             intent.putExtra("champion", champion);
+            startActivity(intent);
         }
     }
 }
