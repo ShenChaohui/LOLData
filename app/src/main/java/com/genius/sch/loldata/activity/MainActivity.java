@@ -17,18 +17,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.adapter.HeroListAdapter;
-import com.genius.sch.loldata.database.dao.HeroInfoDao;
-import com.genius.sch.loldata.entity.HeroInfo;
+import com.genius.sch.loldata.adapter.ChampionListAdapter;
+import com.genius.sch.loldata.database.dao.ChampionDao;
+import com.genius.sch.loldata.entity.Champion;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView lvHeroList;
-    private HeroListAdapter adapter;
-    private ArrayList<HeroInfo> heroInfos;
+    private ListView lvChampionList;
+    private ChampionListAdapter adapter;
+    private ArrayList<Champion> champions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,22 +55,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /***************************************************************************/
-        lvHeroList = findViewById(R.id.lv_main);
-        HeroInfoDao dao = new HeroInfoDao(this);
+        lvChampionList = findViewById(R.id.lv_main);
+        ChampionDao dao = new ChampionDao(this);
         try {
-            heroInfos = (ArrayList<HeroInfo>) dao.queryAll();
+            champions = (ArrayList<Champion>) dao.queryAll();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        adapter = new HeroListAdapter(this, heroInfos);
-        lvHeroList.setAdapter(adapter);
+        adapter = new ChampionListAdapter(this, champions);
+        lvChampionList.setAdapter(adapter);
 
-        lvHeroList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvChampionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, HeroDetailActivity.class);
-                intent.putExtra("heroInfo", heroInfos.get(i));
+                Intent intent = new Intent(MainActivity.this, ChampionDetailActivity.class);
+                intent.putExtra("heroInfo", champions.get(i));
                 startActivity(intent);
             }
         });

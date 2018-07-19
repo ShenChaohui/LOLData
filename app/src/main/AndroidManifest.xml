@@ -24,7 +24,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"></activity>
-        <activity android:name=".activity.HeroDetailActivity"></activity>
+        <activity android:name=".activity.ChampionDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -5,8 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.genius.sch.loldata.database.dao.HeroInfoDao;
-import com.genius.sch.loldata.entity.HeroInfo;
+import com.genius.sch.loldata.Utils.SharedPreferencesUtil;
+import com.genius.sch.loldata.database.dao.ChampionDao;
+import com.genius.sch.loldata.entity.Champion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,13 +27,13 @@ public class HttpManager {
      * @param handler
      * @param context
      */
-    public static void getHeroListData(final Handler handler, final Context context) {
+    public static void getChampionListData(final Handler handler, final Context context) {
         RequestParams params = new RequestParams(Urls.HEROLIST);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
-                    HeroInfoDao dao = new HeroInfoDao(context);
+                    ChampionDao dao = new ChampionDao(context);
                     //先清空数据库
                     dao.deleteAll();
                     JSONObject obj = new JSONObject(result);
@@ -43,10 +44,11 @@ public class HttpManager {
                         String slug = heroInfoJson.getString("slug");
                         String faction = heroInfoJson.getString("associated-faction-slug");
                         String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
-                        HeroInfo heroInfo = new HeroInfo(name, slug, imUrl, faction);
-                        dao.save(heroInfo);
-                        getHeroDetail(handler, dao, heroInfo);
+                        Champion champion = new Champion(name, slug, imUrl, faction);
+                        dao.save(champion);
+                        getChampionDetail(dao, champion);
                     }
+                    SharedPreferencesUtil.setParam(context, "isFirst", false);
                     Message message = new Message();
                     message.what = 200;
                     handler.sendMessage(message);
@@ -80,11 +82,10 @@ public class HttpManager {
     /**
      * 获取英雄详情数据
      *
-     * @param handler
      * @param dao
      * @param heroInfo
      */
-    private static void getHeroDetail(final Handler handler, final HeroInfoDao dao, final HeroInfo heroInfo) {
+    private static void getChampionDetail(final ChampionDao dao, final Champion heroInfo) {
         RequestParams params = new RequestParams(Urls.getHeroDetails(heroInfo.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override

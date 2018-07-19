@@ -9,17 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.Utils.GsonTtils;
 import com.genius.sch.loldata.Utils.ImageUtils;
-import com.genius.sch.loldata.entity.HeroInfo;
+import com.genius.sch.loldata.entity.Champion;
 
 import java.util.ArrayList;
 
-public class HeroListAdapter extends BaseAdapter {
+public class ChampionListAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<HeroInfo> data;
+    private ArrayList<Champion> data;
 
-    public HeroListAdapter(Context context, ArrayList<HeroInfo> data) {
+    public ChampionListAdapter(Context context, ArrayList<Champion> data) {
         this.context = context;
         this.data = data;
     }
@@ -51,9 +50,9 @@ public class HeroListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        HeroInfo heroInfo = data.get(i);
-        ImageUtils.bindImageByUrl(viewHolder.im, heroInfo.getImUrl());
-        viewHolder.tv.setText(heroInfo.getName());
+        Champion champion = data.get(i);
+        ImageUtils.bindImageByUrl(viewHolder.im, champion.getImUrl());
+        viewHolder.tv.setText(champion.getName());
         return view;
     }
 
