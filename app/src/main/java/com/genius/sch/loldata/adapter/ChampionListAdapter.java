@@ -43,21 +43,29 @@ public class ChampionListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.item_main_herolist, null);
-            viewHolder.im = view.findViewById(R.id.im_item_heroinfo_img);
-            viewHolder.tv = view.findViewById(R.id.tv_item_heroinfo_name);
+            view = LayoutInflater.from(context).inflate(R.layout.item_main_championlist, null);
+            viewHolder.im = view.findViewById(R.id.iv_item_champion_img);
+            viewHolder.tvName = view.findViewById(R.id.tv_item_champion_name);
+            viewHolder.tvTitle = view.findViewById(R.id.tv_item_champion_title);
+            viewHolder.tvRole = view.findViewById(R.id.tv_item_champion_role);
+            viewHolder.tvFaction = view.findViewById(R.id.tv_item_champion_faction);
+
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
         Champion champion = data.get(i);
         ImageUtils.bindImageByUrl(viewHolder.im, champion.getImUrl());
-        viewHolder.tv.setText(champion.getName());
+        viewHolder.tvName.setText(champion.getName());
+        viewHolder.tvTitle.setText(champion.getTitle());
+        viewHolder.tvRole.setText(champion.getRole());
+        viewHolder.tvFaction.setText(champion.getFaction());
+
         return view;
     }
 
     class ViewHolder {
         ImageView im;
-        TextView tv;
+        TextView tvName, tvTitle, tvRole, tvFaction;
     }
 }

@@ -31,8 +31,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.basic_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.deep_gold));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.light_gold));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

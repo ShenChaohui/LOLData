@@ -99,10 +99,12 @@ public class HttpManager {
                     String full = biography.getString("full");
                     String _short = biography.getString("short");
                     String quote = biography.getString("quote");
+                    String role = championObj.getJSONArray("roles").getJSONObject(0).getString("name");
                     champion.setBiography(full);
                     champion.setIntroduce(_short);
                     champion.setQuote(quote);
                     champion.setTitle(title);
+                    champion.setRole(role);
                     dao.update(champion);
 
 
