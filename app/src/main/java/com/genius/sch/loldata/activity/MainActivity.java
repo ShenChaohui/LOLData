@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,19 +19,25 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.genius.sch.loldata.ChampionListFragment;
 import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.adapter.ChampionListAdapter;
+import com.genius.sch.loldata.adapter.ChampionListFragmentAdapter;
 import com.genius.sch.loldata.database.dao.ChampionDao;
 import com.genius.sch.loldata.entity.Champion;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView lvChampionList;
-    private ChampionListAdapter adapter;
-    private ArrayList<Champion> champions;
+    private TabLayout mTabLyout;
+    private ViewPager mViewPager;
+    private String roles[] = {"战士", "坦克", "刺客", "法师", "射手", "辅助"};
+    private List<Fragment> mFragments;
+    private List<String> mTitles;
+    private ChampionListFragmentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +56,19 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /***************************************************************************/
-        lvChampionList = findViewById(R.id.lv_main);
-        ChampionDao dao = new ChampionDao(this);
-        try {
-            champions = (ArrayList<Champion>) dao.queryAll();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        mTabLyout = findViewById(R.id.tl_main);
+        mViewPager = findViewById(R.id.vp_main);
+        mTitles = new ArrayList<>();
+        mFragments = new ArrayList<>();
+        for (int i = 0; i < roles.length; i++) {
+            mTitles.add(roles[i]);
+            mFragments.add(ChampionListFragment.newInstance(roles[i]));
         }
-        adapter = new ChampionListAdapter(this, champions);
-        lvChampionList.setAdapter(adapter);
+        adapter = new ChampionListFragmentAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        mViewPager.setAdapter(adapter);
+        mTabLyout.setupWithViewPager(mViewPager);
 
-        lvChampionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, ChampionDetailActivity.class);
-                intent.putExtra("champion", champions.get(i));
-                startActivity(intent);
-            }
-        });
 
     }
 

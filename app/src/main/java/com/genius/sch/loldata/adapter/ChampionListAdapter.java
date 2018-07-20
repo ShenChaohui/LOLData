@@ -47,7 +47,6 @@ public class ChampionListAdapter extends BaseAdapter {
             viewHolder.im = view.findViewById(R.id.iv_item_champion_img);
             viewHolder.tvName = view.findViewById(R.id.tv_item_champion_name);
             viewHolder.tvTitle = view.findViewById(R.id.tv_item_champion_title);
-            viewHolder.tvRole = view.findViewById(R.id.tv_item_champion_role);
             viewHolder.tvFaction = view.findViewById(R.id.tv_item_champion_faction);
 
             view.setTag(viewHolder);
@@ -58,7 +57,6 @@ public class ChampionListAdapter extends BaseAdapter {
         ImageUtils.bindImageByUrl(viewHolder.im, champion.getImUrl());
         viewHolder.tvName.setText(champion.getName());
         viewHolder.tvTitle.setText(champion.getTitle());
-        viewHolder.tvRole.setText(champion.getRole());
         viewHolder.tvFaction.setText(champion.getFaction());
 
         return view;
@@ -66,6 +64,6 @@ public class ChampionListAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView im;
-        TextView tvName, tvTitle, tvRole, tvFaction;
+        TextView tvName, tvTitle, tvFaction;
     }
 }

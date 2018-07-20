@@ -7,6 +7,7 @@
     android:padding="5dp">
 
     <ImageView
+        android:layout_marginLeft="10dp"
         android:id="@+id/iv_item_champion_img"
         android:layout_width="60dp"
         android:layout_height="60dp" />
@@ -48,17 +49,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_item_champion_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#CD6839" />
-
-            <TextView
                 android:id="@+id/tv_item_champion_faction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textColor="#CDBA96" />
+                android:textColor="#CD6839" />
         </LinearLayout>
     </LinearLayout>
 
