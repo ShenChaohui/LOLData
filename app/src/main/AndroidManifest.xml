@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"></activity>
+            android:label="英雄"></activity>
         <activity android:name=".activity.ChampionDetailActivity"></activity>
         <activity
             android:name=".activity.ChampionBiographyActivity"

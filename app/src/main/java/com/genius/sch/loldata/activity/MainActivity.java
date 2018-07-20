@@ -91,8 +91,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_champion) {
+            getSupportActionBar().setTitle("英雄");
             showFragment(championFragment);
         } else if (id == R.id.nav_faction) {
+            getSupportActionBar().setTitle("地区");
             showFragment(factionFragment);
         } else if (id == R.id.nav_slideshow) {
 

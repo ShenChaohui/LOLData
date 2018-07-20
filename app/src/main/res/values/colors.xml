@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--状态栏颜色-->
+    <color name="colorPrimaryDark">#000</color>
+    <!--标题栏颜色-->
     <color name="colorPrimary">#131415</color>
-    <color name="colorPrimaryDark">#181818</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--内容背景色-->
+    <color name="centent_bg">#202020</color>
+    <!--侧滑菜单背景色-->
+    <color name="nav_bg">#404040</color>
     <color name="white">#fff</color>
 
     <color name="deep_gold">#937301</color>
     <color name="light_gold">#D3C7AA</color>
-
+    <!--半透明金色边框-->
+    <color name="shape_gold">#a0937301</color>
 </resources>
