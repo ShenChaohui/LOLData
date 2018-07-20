@@ -28,8 +28,6 @@
         <activity
             android:name=".activity.ChampionBiographyActivity"
             android:label="英雄传记"></activity>
-        <activity android:name=".activity.FactionActivity"
-            android:label="地区"></activity>
     </application>
 
 </manifest>

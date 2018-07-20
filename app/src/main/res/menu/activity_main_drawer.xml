@@ -5,13 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_champion"
+            android:icon="@mipmap/icon_champion"
+            android:title="英雄" />
+        <item
             android:id="@+id/nav_faction"
             android:icon="@mipmap/icon_faction"
             android:title="地区" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"

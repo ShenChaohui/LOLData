@@ -1,11 +1,10 @@
 package com.genius.sch.loldata.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,21 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
-import com.genius.sch.loldata.ChampionListFragment;
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.adapter.ChampionListFragmentAdapter;
-import java.util.ArrayList;
-import java.util.List;
+import com.genius.sch.loldata.fiagment.ChampionFragment;
+import com.genius.sch.loldata.fiagment.FactionFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private TabLayout mTabLyout;
-    private ViewPager mViewPager;
-    private String roles[] = {"战士", "坦克", "刺客", "法师", "射手", "辅助"};
-    private List<Fragment> mFragments;
-    private List<String> mTitles;
-    private ChampionListFragmentAdapter adapter;
+    private FrameLayout fl;
+    private ChampionFragment championFragment;
+    private FactionFragment factionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +41,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /***************************************************************************/
+        fl = findViewById(R.id.fl_main);
+        championFragment = new ChampionFragment();
+        factionFragment = new FactionFragment();
 
-        mTabLyout = findViewById(R.id.tl_main);
-        mViewPager = findViewById(R.id.vp_main);
-        mTitles = new ArrayList<>();
-        mFragments = new ArrayList<>();
-        for (int i = 0; i < roles.length; i++) {
-            mTitles.add(roles[i]);
-            mFragments.add(ChampionListFragment.newInstance(roles[i]));
-        }
-        adapter = new ChampionListFragmentAdapter(getSupportFragmentManager(), mFragments, mTitles);
-        mViewPager.setAdapter(adapter);
-        mTabLyout.setupWithViewPager(mViewPager);
-
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fl_main, championFragment);
+        transaction.add(R.id.fl_main, factionFragment);
+        transaction.commit();
+        showFragment(championFragment);
     }
 
     @Override
@@ -100,10 +90,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_faction) {
-            startActivity(new Intent(this,FactionActivity.class));
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_champion) {
+            showFragment(championFragment);
+        } else if (id == R.id.nav_faction) {
+            showFragment(factionFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -117,5 +107,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.hide(factionFragment);
+        transaction.hide(championFragment);
+        transaction.show(fragment);
+        transaction.commit();
     }
 }

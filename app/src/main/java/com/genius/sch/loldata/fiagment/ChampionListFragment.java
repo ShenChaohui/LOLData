@@ -1,4 +1,4 @@
-package com.genius.sch.loldata;
+package com.genius.sch.loldata.fiagment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.activity.ChampionDetailActivity;
-import com.genius.sch.loldata.activity.MainActivity;
 import com.genius.sch.loldata.adapter.ChampionListAdapter;
 import com.genius.sch.loldata.database.dao.ChampionDao;
 import com.genius.sch.loldata.entity.Champion;
