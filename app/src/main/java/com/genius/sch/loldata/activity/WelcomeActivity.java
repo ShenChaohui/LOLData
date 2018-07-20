@@ -26,11 +26,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        boolean isFirst = (boolean) SharedPreferencesUtil.getParam(this, "isFirst", true);
-        if (isFirst) {
-            HttpManager.getChampionListData(handler, this);
-        } else {
-            handler.sendEmptyMessageDelayed(200, 1000);
-        }
+        HttpManager.getChampionListData(handler, this);
     }
 }

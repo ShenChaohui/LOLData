@@ -1,13 +1,9 @@
 package com.genius.sch.loldata.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,17 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.genius.sch.loldata.ChampionListFragment;
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.adapter.ChampionListAdapter;
 import com.genius.sch.loldata.adapter.ChampionListFragmentAdapter;
-import com.genius.sch.loldata.database.dao.ChampionDao;
-import com.genius.sch.loldata.entity.Champion;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

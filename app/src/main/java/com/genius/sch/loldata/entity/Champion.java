@@ -34,8 +34,9 @@ public class Champion implements Serializable {
     private String quote;//引述
 
     @DatabaseField
-    private String role;//类型
-
+    private String role1;//类型1
+    @DatabaseField
+    private String role2;//类型2
 
     public Champion() {
     }
@@ -148,26 +149,34 @@ public class Champion implements Serializable {
         this.quote = quote;
     }
 
-    public String getRole() {
-        return role;
+    public String getRole1() {
+        return role1;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole1(String role1) {
+        this.role1 = role1;
+    }
+
+    public String getRole2() {
+        return role2;
+    }
+
+    public void setRole2(String role2) {
+        this.role2 = role2;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Drawable getRoleImg(Context context) {
         Drawable imageView = null;
-        if (role.equals("战士")) {
+        if (role1.equals("战士")) {
             imageView = context.getDrawable(R.mipmap.role_icon_fighter);
-        } else if (role.equals("法师")) {
+        } else if (role1.equals("法师")) {
             imageView = context.getDrawable(R.mipmap.role_icon_mage);
-        } else if (role.equals("射手")) {
+        } else if (role1.equals("射手")) {
             imageView = context.getDrawable(R.mipmap.role_icon_marksman);
-        } else if (role.equals("辅助")) {
+        } else if (role1.equals("辅助")) {
             imageView = context.getDrawable(R.mipmap.role_icon_support);
-        } else if (role.equals("刺客")) {
+        } else if (role1.equals("刺客")) {
             imageView = context.getDrawable(R.mipmap.role_icon_assassin);
         }
 

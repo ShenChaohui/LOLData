@@ -50,7 +50,7 @@ public class ChampionListFragment extends Fragment {
         lvChampionList = view.findViewById(R.id.lv_championlist);
         ChampionDao dao = new ChampionDao(getActivity());
         try {
-            champions = (ArrayList<Champion>) dao.query("role", role);
+            champions = (ArrayList<Champion>) dao.query("role1", role);
 
         } catch (SQLException e) {
             e.printStackTrace();

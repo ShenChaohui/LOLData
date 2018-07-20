@@ -34,24 +34,26 @@ public class HttpManager {
             public void onSuccess(String result) {
                 try {
                     ChampionDao dao = new ChampionDao(context);
-                    //先清空数据库
-                    dao.deleteAll();
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
-                    for (int i = 0; i < champions.length(); i++) {
-                        JSONObject heroInfoJson = champions.getJSONObject(i);
-                        String name = heroInfoJson.getString("name");
-                        String slug = heroInfoJson.getString("slug");
-                        String faction = heroInfoJson.getString("associated-faction-slug");
-                        String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
-                        Champion champion = new Champion(name, slug, imUrl, faction);
-                        dao.save(champion);
-                        getChampionDetail(dao, champion);
-                    }
-                    SharedPreferencesUtil.setParam(context, "isFirst", false);
                     Message message = new Message();
                     message.what = 200;
-                    handler.sendMessage(message);
+                    if (dao.queryAll().size() == champions.length()) {
+                        handler.sendMessage(message);
+                    } else {
+                        dao.deleteAll();
+                        for (int i = 0; i < champions.length(); i++) {
+                            JSONObject heroInfoJson = champions.getJSONObject(i);
+                            String name = heroInfoJson.getString("name");
+                            String slug = heroInfoJson.getString("slug");
+                            String faction = heroInfoJson.getString("associated-faction-slug");
+                            String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
+                            Champion champion = new Champion(name, slug, imUrl, faction);
+                            dao.save(champion);
+                            getChampionDetail(dao, champion);
+                        }
+                        handler.sendMessage(message);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("JSONException", e.toString());
@@ -99,15 +101,18 @@ public class HttpManager {
                     String full = biography.getString("full");
                     String _short = biography.getString("short");
                     String quote = biography.getString("quote");
-                    String role = championObj.getJSONArray("roles").getJSONObject(0).getString("name");
+                    JSONArray roles = championObj.getJSONArray("roles");
+                    String role1 = roles.getJSONObject(0).getString("name");
+                    champion.setRole1(role1);
+                    if (roles.length() > 1) {
+                        String role2 = roles.getJSONObject(1).getString("name");
+                        champion.setRole2(role2);
+                    }
                     champion.setBiography(full);
                     champion.setIntroduce(_short);
                     champion.setQuote(quote);
                     champion.setTitle(title);
-                    champion.setRole(role);
                     dao.update(champion);
-
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

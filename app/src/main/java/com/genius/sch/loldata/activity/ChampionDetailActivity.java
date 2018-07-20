@@ -63,7 +63,11 @@ public class ChampionDetailActivity extends BaseActivity implements View.OnClick
         tvChampionQuote.setText(champion.getQuote());
         tvChampionQuoteName.setText("——" + champion.getName());
         tvChampionIntroduce.setText(Html.fromHtml(champion.getIntroduce()));
-        tvChampionRole.setText(champion.getRole());
+        if (champion.getRole2() != null) {
+            tvChampionRole.setText(champion.getRole1() + " | " + champion.getRole2());
+        } else {
+            tvChampionRole.setText(champion.getRole1());
+        }
         ivChampionRole.setImageDrawable(champion.getRoleImg(context));
     }
 
