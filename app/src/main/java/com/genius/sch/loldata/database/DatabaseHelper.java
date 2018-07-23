@@ -25,7 +25,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Map<String, Dao> daos = new HashMap<>();
 
     private DatabaseHelper(Context context) {
-        super(context, DATABASENAME, null, 2);
+        super(context, DATABASENAME, null, 3);
     }
 
 
