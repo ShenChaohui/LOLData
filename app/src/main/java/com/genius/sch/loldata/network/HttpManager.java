@@ -5,9 +5,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.genius.sch.loldata.Utils.SharedPreferencesUtil;
 import com.genius.sch.loldata.database.dao.ChampionDao;
+import com.genius.sch.loldata.database.dao.FactionDao;
 import com.genius.sch.loldata.entity.Champion;
+import com.genius.sch.loldata.entity.Faction;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +18,8 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HttpManager {
 
@@ -28,7 +31,7 @@ public class HttpManager {
      * @param context
      */
     public static void getChampionListData(final Handler handler, final Context context) {
-        RequestParams params = new RequestParams(Urls.HEROLIST);
+        RequestParams params = new RequestParams(Urls.GET_CHAMPION_LIST);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -88,7 +91,7 @@ public class HttpManager {
      * @param champion
      */
     private static void getChampionDetail(final ChampionDao dao, final Champion champion) {
-        RequestParams params = new RequestParams(Urls.getHeroDetails(champion.getSlug()));
+        RequestParams params = new RequestParams(Urls.getChampionDetails(champion.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -135,5 +138,87 @@ public class HttpManager {
 
             }
         });
+    }
+
+    public static void getFactionListData(final Context context) {
+        RequestParams params = new RequestParams(Urls.GET_FACTION);
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    FactionDao dao = new FactionDao(context);
+                    dao.deleteAll();
+                    JSONObject object = new JSONObject(result);
+                    JSONArray factions = object.getJSONArray("factions");
+//                    if (dao.queryAll().size() == factions.length()) {
+//                        return;
+//                    }
+                    for (int i = 0; i < factions.length(); i++) {
+                        JSONObject factionObj = factions.getJSONObject(i);
+                        String name = factionObj.getString("name");
+                        String slug = factionObj.getString("slug");
+                        String imgUrl = factionObj.getJSONObject("image").getString("uri");
+                        Faction faction = new Faction(name, slug, imgUrl);
+                        dao.save(faction);
+                        getFactionDetails(dao, faction);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("JSONException", e.toString());
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Log.e("SQLException", e.toString());
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("error", ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public static void getFactionDetails(final FactionDao dao, final Faction faction) {
+        RequestParams params = new RequestParams(Urls.getFactionDetails(faction.getSlug()));
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    faction.setDetailJson(result);
+                    dao.update(faction);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
     }
 }

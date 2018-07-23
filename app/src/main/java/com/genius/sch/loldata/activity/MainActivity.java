@@ -3,7 +3,6 @@ package com.genius.sch.loldata.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,14 +14,15 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.fiagment.ChampionFragment;
-import com.genius.sch.loldata.fiagment.FactionFragment;
+import com.genius.sch.loldata.fragment.ChampionFragment;
+import com.genius.sch.loldata.fragment.FactionListFragment;
+import com.genius.sch.loldata.network.HttpManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FrameLayout fl;
     private ChampionFragment championFragment;
-    private FactionFragment factionFragment;
+    private FactionListFragment factionListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,15 @@ public class MainActivity extends AppCompatActivity
         /***************************************************************************/
         fl = findViewById(R.id.fl_main);
         championFragment = new ChampionFragment();
-        factionFragment = new FactionFragment();
+        factionListFragment = new FactionListFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fl_main, championFragment);
-        transaction.add(R.id.fl_main, factionFragment);
+        transaction.add(R.id.fl_main, factionListFragment);
         transaction.commit();
         showFragment(championFragment);
+        //获去地区数据
+        HttpManager.getFactionListData(this);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity
             showFragment(championFragment);
         } else if (id == R.id.nav_faction) {
             getSupportActionBar().setTitle("地区");
-            showFragment(factionFragment);
+            showFragment(factionListFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.hide(factionFragment);
+        transaction.hide(factionListFragment);
         transaction.hide(championFragment);
         transaction.show(fragment);
         transaction.commit();

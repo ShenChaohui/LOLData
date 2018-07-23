@@ -1,4 +1,4 @@
-package com.genius.sch.loldata.fiagment;
+package com.genius.sch.loldata.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import com.genius.sch.loldata.entity.Champion;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * 位于championFragment中的viewPager中的Fragment
+ */
 public class ChampionListFragment extends Fragment {
     private String role;
 

@@ -1,4 +1,4 @@
-package com.genius.sch.loldata.fiagment;
+package com.genius.sch.loldata.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +15,9 @@ import com.genius.sch.loldata.adapter.ChampionListFragmentAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 位于主页activity中的fragment
+ */
 public class ChampionFragment extends Fragment {
     private TabLayout mTabLyout;
     private ViewPager mViewPager;
