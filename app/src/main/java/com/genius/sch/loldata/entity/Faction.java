@@ -19,7 +19,9 @@ public class Faction {
     @DatabaseField
     private String imgUrl;
     @DatabaseField
-    private String detailJson;
+    private String introduce;
+    @DatabaseField
+    private String associatedChampions;
 
     public Faction() {
     }
@@ -105,11 +107,19 @@ public class Faction {
         return drawable;
     }
 
-    public String getDetailJson() {
-        return detailJson;
+    public String getIntroduce() {
+        return introduce;
     }
 
-    public void setDetailJson(String detailJson) {
-        this.detailJson = detailJson;
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getAssociatedChampions() {
+        return associatedChampions;
+    }
+
+    public void setAssociatedChampions(String associatedChampions) {
+        this.associatedChampions = associatedChampions;
     }
 }

@@ -54,7 +54,7 @@ public class FactionListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         Faction faction = data.get(i);
-        x.image().bind(viewHolder.img, faction.getImgUrl());
+        ImageUtils.bindFactionImage(viewHolder.img, faction.getImgUrl());
         viewHolder.tvName.setText(faction.getName());
         viewHolder.icon.setImageDrawable(faction.getIcon(context));
 

@@ -2,22 +2,32 @@ package com.genius.sch.loldata.activity;
 
 import android.content.Intent;
 import android.text.Html;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
+import com.genius.sch.loldata.Utils.ImageUtils;
+import com.genius.sch.loldata.adapter.FactionDetailChampionListAdapter;
+import com.genius.sch.loldata.database.dao.ChampionDao;
 import com.genius.sch.loldata.database.dao.FactionDao;
+import com.genius.sch.loldata.entity.Champion;
 import com.genius.sch.loldata.entity.Faction;
-
-import org.xutils.x;
+import com.genius.sch.loldata.view.ScollListView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FactionDetailActivity extends BaseActivity {
     private Faction faction;
     private ImageView ivImg, ivIcon;
     private TextView tvName;
-    private TextView tvintroduce;
+    private TextView tvIntroduce;
+    private ScollListView slvChampions;
+    private ArrayList<Champion> championArrayList;
+    private FactionDetailChampionListAdapter adapter;
+    private TextView tvChampionsTitle;
 
     @Override
     public int getActivity() {
@@ -30,25 +40,47 @@ public class FactionDetailActivity extends BaseActivity {
         ivImg = findViewById(R.id.iv_factiondetail_img);
         ivIcon = findViewById(R.id.iv_factiondetail_icon);
         tvName = findViewById(R.id.tv_factiondetail_name);
-        tvintroduce = findViewById(R.id.tv_factiondetail_introduce);
-
+        tvIntroduce = findViewById(R.id.tv_factiondetail_introduce);
+        slvChampions = findViewById(R.id.slv_faction_champions);
+        slvChampions.setFocusable(false);
+        tvChampionsTitle = findViewById(R.id.tv_factiondetail_champions_title);
     }
 
     @Override
     protected void main() {
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         String name = intent.getStringExtra("factionName");
         getSupportActionBar().setTitle(name);
+        tvChampionsTitle.setText(name + "地区的英雄们");
         FactionDao dao = new FactionDao(context);
         try {
             faction = dao.queryT("name", name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        x.image().bind(ivImg, faction.getImgUrl());
+        ImageUtils.bindFactionImage(ivImg, faction.getImgUrl());
         ivIcon.setImageDrawable(faction.getIcon(context));
         tvName.setText(faction.getName());
-        tvintroduce.setText(Html.fromHtml(faction.getIntroduce()));
-
+        tvIntroduce.setText(Html.fromHtml(faction.getIntroduce()));
+        ChampionDao championDao = new ChampionDao(context);
+        final String champions[] = faction.getAssociatedChampions().split(";");
+        championArrayList = new ArrayList<>();
+        for (int i = 0; i < champions.length; i++) {
+            try {
+                championArrayList.add(championDao.queryT("name", champions[i]));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        adapter = new FactionDetailChampionListAdapter(context, championArrayList);
+        slvChampions.setAdapter(adapter);
+        slvChampions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent1 = new Intent(context, ChampionDetailActivity.class);
+                intent1.putExtra("champion", championArrayList.get(i));
+                startActivity(intent1);
+            }
+        });
     }
 }

@@ -18,12 +18,12 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp">
+                android:layout_height="500px">
 
                 <ImageView
                     android:id="@+id/iv_factiondetail_img"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="416px" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -31,12 +31,12 @@
                     android:layout_gravity="bottom"
                     android:background="@drawable/factiondatail_name_bg"
                     android:orientation="vertical"
-                    android:paddingTop="30dp">
+                    >
 
                     <ImageView
                         android:id="@+id/iv_factiondetail_icon"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center_horizontal|bottom" />
 
                     <TextView
@@ -57,8 +57,39 @@
                 android:layout_margin="20dp"
                 android:textColor="@color/light_gold"
                 android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/icon_champion" />
+
+                <TextView
+                    android:id="@+id/tv_factiondetail_champions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/deep_gold"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/shape_gold" />
+
+            <com.genius.sch.loldata.view.ScollListView
+                android:id="@+id/slv_faction_champions"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:divider="@color/shape_gold"
+                android:dividerHeight="1px" />
         </LinearLayout>
-
-
     </ScrollView>
 </LinearLayout>

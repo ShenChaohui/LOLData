@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
+import com.genius.sch.loldata.Utils.ImageUtils;
 import com.genius.sch.loldata.entity.Champion;
-
-import org.xutils.x;
 
 
 public class ChampionDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -57,7 +56,7 @@ public class ChampionDetailActivity extends BaseActivity implements View.OnClick
         Intent intent = getIntent();
         champion = (Champion) intent.getSerializableExtra("champion");
         getSupportActionBar().setTitle(champion.getName());
-        x.image().bind(iv, champion.getImUrl());
+        ImageUtils.bindChampionImage(iv, champion.getImUrl());
         tvChampionName.setText(champion.getName());
         tvChampionTitle.setText(champion.getTitle());
         tvChampionQuote.setText(champion.getQuote());

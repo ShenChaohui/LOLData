@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /***************************************************************************/
+
         fl = findViewById(R.id.fl_main);
         championFragment = new ChampionFragment();
         factionListFragment = new FactionListFragment();
@@ -50,8 +51,7 @@ public class MainActivity extends AppCompatActivity
         transaction.add(R.id.fl_main, factionListFragment);
         transaction.commit();
         showFragment(championFragment);
-        //获去地区数据
-        HttpManager.getFactionListData(this);
+
     }
 
     @Override

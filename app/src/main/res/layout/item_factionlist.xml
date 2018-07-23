@@ -12,12 +12,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_item_faction_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="1080px"
+            android:layout_height="416px"
             android:layout_marginTop="30dp" />
 
         <FrameLayout

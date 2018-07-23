@@ -28,6 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         //获取英雄数据
         HttpManager.getChampionListData(handler, this);
-
+        //获去地区数据
+        HttpManager.getFactionListData(this);
     }
 }

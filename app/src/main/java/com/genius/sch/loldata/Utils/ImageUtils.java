@@ -8,20 +8,56 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 public class ImageUtils {
-    static ImageOptions options = new ImageOptions.Builder()
+    /**
+     * 原画
+     * @param iv
+     * @param url
+     */
+    public static void bindChampionImage(ImageView iv, String url) {
+        ImageOptions options = new ImageOptions.Builder()
 //设置加载过程中的图片
-            .setLoadingDrawableId(R.mipmap.app_logo)
+                .setLoadingDrawableId(R.mipmap.app_logo)
 //设置加载失败后的图片
-            .setFailureDrawableId(R.mipmap.app_logo)
+                .setFailureDrawableId(R.mipmap.app_logo)
 //设置使用缓存
-            .setUseMemCache(true)
-//设置显示圆形图片
-            .setCircular(true)
-//设置支持gif
-            .setIgnoreGif(false)    //以及其他方法
-            .build();
+                .setUseMemCache(true)
+                .setSize(1080, 607)
+                .build();
+        x.image().bind(iv, url, options);
+    }
 
-    public static void bindImageByUrl(ImageView iv, String url) {
+    /**
+     * 图标
+     * @param iv
+     * @param url
+     */
+    public static void bindChampionImageIcon(ImageView iv, String url) {
+        ImageOptions options = new ImageOptions.Builder()
+//设置加载过程中的图片
+                .setLoadingDrawableId(R.mipmap.app_logo)
+//设置加载失败后的图片
+                .setFailureDrawableId(R.mipmap.app_logo)
+//设置使用缓存
+                .setUseMemCache(true)
+                .setSize(192, 108)
+                .build();
+        x.image().bind(iv, url, options);
+    }
+    /**
+     * 地区
+     * @param iv
+     * @param url
+     */
+    public static void bindFactionImage(ImageView iv, String url) {
+        ImageOptions options = new ImageOptions.Builder()
+//设置加载过程中的图片
+                .setLoadingDrawableId(R.mipmap.app_logo)
+//设置加载失败后的图片
+                .setFailureDrawableId(R.mipmap.app_logo)
+//设置使用缓存
+                .setUseMemCache(true)
+                .setSize(1080, 416)
+                .build();
         x.image().bind(iv, url, options);
     }
 

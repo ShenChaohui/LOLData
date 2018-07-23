@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HttpManager {
-
+    private static int CHAMPION_NUM;
 
     /**
      * 获取所有英雄
@@ -39,11 +39,12 @@ public class HttpManager {
                     ChampionDao dao = new ChampionDao(context);
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
-                    Message message = new Message();
-                    message.what = 200;
                     if (dao.queryAll().size() == champions.length()) {
+                        Message message = new Message();
+                        message.what = 200;
                         handler.sendMessage(message);
                     } else {
+                        CHAMPION_NUM = 0;
                         dao.deleteAll();
                         for (int i = 0; i < champions.length(); i++) {
                             JSONObject heroInfoJson = champions.getJSONObject(i);
@@ -53,16 +54,13 @@ public class HttpManager {
                             String imUrl = heroInfoJson.getJSONObject("image").getString("uri");
                             Champion champion = new Champion(name, slug, imUrl, faction);
                             dao.save(champion);
-                            getChampionDetail(dao, champion);
+                            getChampionDetail(dao, champion, handler);
                         }
-                        handler.sendMessage(message);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("JSONException", e.toString());
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    Log.e("SQLException", e.toString());
                 }
             }
 
@@ -90,7 +88,7 @@ public class HttpManager {
      * @param dao
      * @param champion
      */
-    private static void getChampionDetail(final ChampionDao dao, final Champion champion) {
+    private static void getChampionDetail(final ChampionDao dao, final Champion champion, final Handler handler) {
         RequestParams params = new RequestParams(Urls.getChampionDetails(champion.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -116,6 +114,12 @@ public class HttpManager {
                     champion.setQuote(quote);
                     champion.setTitle(title);
                     dao.update(champion);
+                    CHAMPION_NUM++;
+                    if (CHAMPION_NUM == dao.queryAll().size()) {
+                        Message message = new Message();
+                        message.what = 200;
+                        handler.sendMessage(message);
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -150,9 +154,9 @@ public class HttpManager {
                     dao.deleteAll();
                     JSONObject object = new JSONObject(result);
                     JSONArray factions = object.getJSONArray("factions");
-//                    if (dao.queryAll().size() == factions.length()) {
-//                        return;
-//                    }
+                    if (dao.queryAll().size() == factions.length()) {
+                        return;
+                    }
                     for (int i = 0; i < factions.length(); i++) {
                         JSONObject factionObj = factions.getJSONObject(i);
                         String name = factionObj.getString("name");
@@ -196,9 +200,23 @@ public class HttpManager {
             @Override
             public void onSuccess(String result) {
                 try {
-                    faction.setDetailJson(result);
+                    JSONObject object = new JSONObject(result);
+                    String introduce = object.getJSONObject("faction").getJSONObject("overview").getString("short");
+                    JSONArray associated_Champions = object.getJSONArray("associated-champions");
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < associated_Champions.length(); i++) {
+                        if (i == associated_Champions.length() - 1) {
+                            sb.append(associated_Champions.getJSONObject(i).getString("name"));
+                        } else {
+                            sb.append(associated_Champions.getJSONObject(i).getString("name") + ";");
+                        }
+                    }
+                    faction.setIntroduce(introduce);
+                    faction.setAssociatedChampions(sb.toString());
                     dao.update(faction);
                 } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
