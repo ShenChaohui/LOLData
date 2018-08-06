@@ -9,16 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.utils.ImageUtils;
 import com.genius.sch.loldata.entity.Champion;
+import com.genius.sch.loldata.utils.ImageUtils;
 
 import java.util.ArrayList;
 
-public class ChampionListAdapter extends BaseAdapter {
+public class ChampionDetailRelatedChampionListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Champion> data;
 
-    public ChampionListAdapter(Context context, ArrayList<Champion> data) {
+    public ChampionDetailRelatedChampionListAdapter(Context context, ArrayList<Champion> data) {
         this.context = context;
         this.data = data;
     }
@@ -43,12 +43,9 @@ public class ChampionListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.item_championlist, null);
-            viewHolder.im = view.findViewById(R.id.iv_item_champion_img);
-            viewHolder.tvName = view.findViewById(R.id.tv_item_champion_name);
-            viewHolder.tvTitle = view.findViewById(R.id.tv_item_champion_title);
-            viewHolder.tvFaction = view.findViewById(R.id.tv_item_champion_faction);
-
+            view = LayoutInflater.from(context).inflate(R.layout.item_chamption_related_champions, null);
+            viewHolder.im = view.findViewById(R.id.iv_item_champion_related_champions_img);
+            viewHolder.tvName = view.findViewById(R.id.tv_item_champion_related_champions_name);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -56,14 +53,12 @@ public class ChampionListAdapter extends BaseAdapter {
         Champion champion = data.get(i);
         ImageUtils.bindChampionImageIcon(viewHolder.im, champion.getImUrl());
         viewHolder.tvName.setText(champion.getName());
-        viewHolder.tvTitle.setText(champion.getTitle());
-        viewHolder.tvFaction.setText(champion.getFaction());
 
         return view;
     }
 
     class ViewHolder {
         ImageView im;
-        TextView tvName, tvTitle, tvFaction;
+        TextView tvName;
     }
 }

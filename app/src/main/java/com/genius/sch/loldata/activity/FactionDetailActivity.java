@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.Utils.ImageUtils;
+import com.genius.sch.loldata.utils.ImageUtils;
 import com.genius.sch.loldata.adapter.FactionDetailChampionListAdapter;
 import com.genius.sch.loldata.database.BaseDao;
 import com.genius.sch.loldata.database.BaseDaoImpl;

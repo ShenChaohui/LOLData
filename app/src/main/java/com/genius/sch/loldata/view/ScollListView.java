@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.widget.ListView;
 
 /**
+ * 解决listview在ScollView中固定高度时，无法滑动问题
+ *
  * Created by cxm on 2016/9/15.
  */
 public class ScollListView extends ListView {

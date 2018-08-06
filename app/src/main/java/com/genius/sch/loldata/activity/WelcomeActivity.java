@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.Utils.SharedPreferencesUtil;
 import com.genius.sch.loldata.network.HttpManager;
 
 public class WelcomeActivity extends AppCompatActivity {

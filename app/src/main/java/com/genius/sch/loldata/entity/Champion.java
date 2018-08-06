@@ -37,6 +37,8 @@ public class Champion implements Serializable {
     private String role1;//类型1
     @DatabaseField
     private String role2;//类型2
+    @DatabaseField
+    private String related_champions;//相关英雄
 
     public Champion() {
     }
@@ -95,6 +97,52 @@ public class Champion implements Serializable {
             default:
                 return "无地区";
         }
+    }
+
+    public Drawable getFactionIcon(Context context) {
+        Drawable drawable = null;
+        switch (faction) {
+            case "bilgewater":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_bilgewater);
+                break;
+            case "ionia":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_iona);
+                break;
+            case "shurima":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_shurima);
+                break;
+            case "freljord":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_freljord);
+                break;
+            case "zaun":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_zaun);
+                break;
+            case "piltover":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_piltover);
+                break;
+            case "noxus":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_noxus);
+                break;
+            case "void":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_void);
+                break;
+            case "bandle-city":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_bandle);
+                break;
+            case "mount-targon":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_mt_targon);
+                break;
+            case "shadow-isles":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_shadow);
+                break;
+            case "demacia":
+                drawable = context.getResources().getDrawable(R.mipmap.icon_demacia);
+                break;
+            default:
+                drawable = context.getResources().getDrawable(R.mipmap.icon_faction);
+                break;
+        }
+        return drawable;
     }
 
     public void setFaction(String faction) {
@@ -163,6 +211,14 @@ public class Champion implements Serializable {
 
     public void setRole2(String role2) {
         this.role2 = role2;
+    }
+
+    public String getRelated_champions() {
+        return related_champions;
+    }
+
+    public void setRelated_champions(String related_champions) {
+        this.related_champions = related_champions;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

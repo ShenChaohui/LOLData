@@ -1,4 +1,4 @@
-package com.genius.sch.loldata.Utils;
+package com.genius.sch.loldata.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

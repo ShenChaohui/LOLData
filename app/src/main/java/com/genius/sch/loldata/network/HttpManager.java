@@ -34,7 +34,7 @@ public class HttpManager {
             @Override
             public void onSuccess(String result) {
                 try {
-                    BaseDao<Champion,Integer> dao = new BaseDaoImpl<>(context,Champion.class);
+                    BaseDao<Champion, Integer> dao = new BaseDaoImpl<>(context, Champion.class);
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
                     //判断本地是否存在所有英雄，如果存在，直接跳转
@@ -108,6 +108,16 @@ public class HttpManager {
                         String role2 = roles.getJSONObject(1).getString("name");
                         champion.setRole2(role2);
                     }
+                    JSONArray related_champions = object.getJSONArray("related-champions");
+                    StringBuffer sb = new StringBuffer();
+                    for (int i = 0; i < related_champions.length(); i++) {
+                        if (i == related_champions.length() - 1) {
+                            sb.append(related_champions.getJSONObject(i).getString("name"));
+                        } else {
+                            sb.append(related_champions.getJSONObject(i).getString("name") + ";");
+                        }
+                    }
+                    champion.setRelated_champions(sb.toString());
                     champion.setBiography(full);
                     champion.setIntroduce(_short);
                     champion.setQuote(quote);
@@ -149,7 +159,7 @@ public class HttpManager {
             @Override
             public void onSuccess(String result) {
                 try {
-                    BaseDao<Faction,Integer> dao = new BaseDaoImpl<>(context,Faction.class);
+                    BaseDao<Faction, Integer> dao = new BaseDaoImpl<>(context, Faction.class);
                     dao.delete(dao.queryAll());
                     JSONObject object = new JSONObject(result);
                     JSONArray factions = object.getJSONArray("factions");

@@ -9,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.sch.loldata.R;
-import com.genius.sch.loldata.Utils.ImageUtils;
+import com.genius.sch.loldata.utils.ImageUtils;
 import com.genius.sch.loldata.entity.Champion;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 

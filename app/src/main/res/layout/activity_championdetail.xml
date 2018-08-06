@@ -110,52 +110,148 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/shape_stroke_gold"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_championdetail_champion_role"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="20dp" />
-
-                <View
-                    android:layout_width="1dip"
-                    android:layout_height="match_parent"
-                    android:background="@color/shape_gold" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
+                    android:background="@drawable/shape_stroke_gold"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="角色定位"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="相关英雄"
                         android:textColor="@color/deep_gold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dip"
+                        android:layout_marginTop="2dp"
                         android:background="@color/shape_gold" />
 
-                    <TextView
-                        android:id="@+id/tv_championdetail_champion_role"
+                    <com.genius.sch.loldata.view.ScollListView
+                        android:id="@+id/slv_champion_related_champions"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textColor="@color/light_gold" />
+                        android:layout_height="match_parent"
+                        android:divider="@color/shape_gold"
+                        android:dividerHeight="1dip">
+
+                    </com.genius.sch.loldata.view.ScollListView>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/shape_stroke_gold"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_championdetail_champion_role"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="20dp" />
+
+                        <View
+                            android:layout_width="1dip"
+                            android:layout_height="match_parent"
+                            android:background="@color/shape_gold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="角色定位"
+                                android:textColor="@color/deep_gold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dip"
+                                android:background="@color/shape_gold" />
+
+                            <TextView
+                                android:id="@+id/tv_championdetail_champion_role"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="@color/light_gold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_stroke_gold"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_championdetail_champion_faction"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="20dp" />
+
+                        <View
+                            android:layout_width="1dip"
+                            android:layout_height="match_parent"
+                            android:background="@color/shape_gold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="地区"
+                                android:textColor="@color/deep_gold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dip"
+                                android:background="@color/shape_gold" />
+
+                            <TextView
+                                android:id="@+id/tv_championdetail_champion_faction"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="@color/light_gold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

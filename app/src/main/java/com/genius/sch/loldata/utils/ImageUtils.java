@@ -1,4 +1,4 @@
-package com.genius.sch.loldata.Utils;
+package com.genius.sch.loldata.utils;
 
 import android.widget.ImageView;
 
@@ -9,7 +9,7 @@ import org.xutils.x;
 
 public class ImageUtils {
     /**
-     * 原画
+     * 英雄原画
      * @param iv
      * @param url
      */
@@ -27,7 +27,7 @@ public class ImageUtils {
     }
 
     /**
-     * 图标
+     * 英雄头像
      * @param iv
      * @param url
      */
