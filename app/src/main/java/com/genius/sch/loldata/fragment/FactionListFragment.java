@@ -13,7 +13,8 @@ import android.widget.ListView;
 import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.activity.FactionDetailActivity;
 import com.genius.sch.loldata.adapter.FactionListAdapter;
-import com.genius.sch.loldata.database.dao.FactionDao;
+import com.genius.sch.loldata.database.BaseDao;
+import com.genius.sch.loldata.database.BaseDaoImpl;
 import com.genius.sch.loldata.entity.Faction;
 
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class FactionListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_factionlist, null);
         lv = view.findViewById(R.id.lv_faction);
-        FactionDao factionDao = new FactionDao(getActivity());
+        BaseDao<Faction,Integer> factionDao = new BaseDaoImpl<>(getActivity(),Faction.class);
         try {
             factions = (ArrayList<Faction>) factionDao.queryAll();
         } catch (SQLException e) {

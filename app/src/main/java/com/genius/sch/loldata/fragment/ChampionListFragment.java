@@ -13,7 +13,8 @@ import android.widget.ListView;
 import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.activity.ChampionDetailActivity;
 import com.genius.sch.loldata.adapter.ChampionListAdapter;
-import com.genius.sch.loldata.database.dao.ChampionDao;
+import com.genius.sch.loldata.database.BaseDao;
+import com.genius.sch.loldata.database.BaseDaoImpl;
 import com.genius.sch.loldata.entity.Champion;
 
 import java.sql.SQLException;
@@ -51,7 +52,7 @@ public class ChampionListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_championlist, null);
         role = getArguments().getString("role");
         lvChampionList = view.findViewById(R.id.lv_championlist);
-        ChampionDao dao = new ChampionDao(getActivity());
+        BaseDao<Champion,Integer> dao = new BaseDaoImpl<>(getActivity(),Champion.class);
         try {
             champions = (ArrayList<Champion>) dao.query("role1", role);
 

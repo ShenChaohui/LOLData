@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.xutils:xutils:3.4.0'
     //数据库框架
     implementation 'com.j256.ormlite:ormlite-android:5.0'
-    implementation 'com.j256.ormlite:ormlite-core:5.0'
+//    implementation 'com.j256.ormlite:ormlite-core:5.0'
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
 

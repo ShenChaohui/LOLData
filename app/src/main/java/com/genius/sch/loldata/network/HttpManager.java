@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.genius.sch.loldata.database.dao.ChampionDao;
-import com.genius.sch.loldata.database.dao.FactionDao;
+import com.genius.sch.loldata.database.BaseDao;
+import com.genius.sch.loldata.database.BaseDaoImpl;
 import com.genius.sch.loldata.entity.Champion;
 import com.genius.sch.loldata.entity.Faction;
 
@@ -18,8 +18,6 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HttpManager {
     private static int CHAMPION_NUM;
@@ -36,16 +34,17 @@ public class HttpManager {
             @Override
             public void onSuccess(String result) {
                 try {
-                    ChampionDao dao = new ChampionDao(context);
+                    BaseDao<Champion,Integer> dao = new BaseDaoImpl<>(context,Champion.class);
                     JSONObject obj = new JSONObject(result);
                     JSONArray champions = obj.getJSONArray("champions");
-                    if (dao.queryAll().size() == champions.length()) {
+                    //判断本地是否存在所有英雄，如果存在，直接跳转
+                    if (dao.count() == champions.length()) {
                         Message message = new Message();
                         message.what = 200;
                         handler.sendMessage(message);
                     } else {
                         CHAMPION_NUM = 0;
-                        dao.deleteAll();
+                        dao.delete(dao.queryAll());
                         for (int i = 0; i < champions.length(); i++) {
                             JSONObject heroInfoJson = champions.getJSONObject(i);
                             String name = heroInfoJson.getString("name");
@@ -88,7 +87,7 @@ public class HttpManager {
      * @param dao
      * @param champion
      */
-    private static void getChampionDetail(final ChampionDao dao, final Champion champion, final Handler handler) {
+    private static void getChampionDetail(final BaseDao dao, final Champion champion, final Handler handler) {
         RequestParams params = new RequestParams(Urls.getChampionDetails(champion.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -115,7 +114,7 @@ public class HttpManager {
                     champion.setTitle(title);
                     dao.update(champion);
                     CHAMPION_NUM++;
-                    if (CHAMPION_NUM == dao.queryAll().size()) {
+                    if (CHAMPION_NUM == dao.count()) {
                         Message message = new Message();
                         message.what = 200;
                         handler.sendMessage(message);
@@ -150,11 +149,11 @@ public class HttpManager {
             @Override
             public void onSuccess(String result) {
                 try {
-                    FactionDao dao = new FactionDao(context);
-                    dao.deleteAll();
+                    BaseDao<Faction,Integer> dao = new BaseDaoImpl<>(context,Faction.class);
+                    dao.delete(dao.queryAll());
                     JSONObject object = new JSONObject(result);
                     JSONArray factions = object.getJSONArray("factions");
-                    if (dao.queryAll().size() == factions.length()) {
+                    if (dao.count() == factions.length()) {
                         return;
                     }
                     for (int i = 0; i < factions.length(); i++) {
@@ -194,7 +193,7 @@ public class HttpManager {
         });
     }
 
-    public static void getFactionDetails(final FactionDao dao, final Faction faction) {
+    public static void getFactionDetails(final BaseDao dao, final Faction faction) {
         RequestParams params = new RequestParams(Urls.getFactionDetails(faction.getSlug()));
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override

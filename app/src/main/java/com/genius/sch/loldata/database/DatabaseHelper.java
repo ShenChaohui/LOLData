@@ -21,11 +21,15 @@ import java.util.Map;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASENAME = "lol_data.db";
-    private Map<String, Dao> daos = new HashMap<>();
+    private static final String DB_NAME = "loldata.db";
+    //数据库名
+    private static final int DB_VERSION = 1;
+    //数据库版本
+    private static DatabaseHelper instance;
 
-    private DatabaseHelper(Context context) {
-        super(context, DATABASENAME, null, 3);
+    //Helper单例
+    public DatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
 
@@ -52,46 +56,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-
-    private static DatabaseHelper instance;
-
     /**
-     * 单例获取该Helper
+     * 双重加锁检查
      *
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 单例
      */
-    public static synchronized DatabaseHelper getHelper(Context context) {
+    public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
             synchronized (DatabaseHelper.class) {
                 if (instance == null) {
-                    instance = new DatabaseHelper(context.getApplicationContext());
+                    instance = new DatabaseHelper(context);
                 }
             }
         }
         return instance;
-    }
-
-    public synchronized Dao getDao(Class clazz) throws SQLException {
-        Dao dao = null;
-        String className = clazz.getSimpleName();
-
-        if (daos.containsKey(className)) {
-            dao = daos.get(className);
-        }
-        if (dao == null) {
-            dao = super.getDao(clazz);
-            daos.put(className, dao);
-        }
-        return dao;
-    }
-
-    @Override
-    public void close() {
-        super.close();
-        for (String key : daos.keySet()) {
-            Dao dao = daos.get(key);
-            dao = null;
-        }
     }
 }

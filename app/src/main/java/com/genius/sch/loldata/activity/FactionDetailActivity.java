@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.genius.sch.loldata.R;
 import com.genius.sch.loldata.Utils.ImageUtils;
 import com.genius.sch.loldata.adapter.FactionDetailChampionListAdapter;
-import com.genius.sch.loldata.database.dao.ChampionDao;
-import com.genius.sch.loldata.database.dao.FactionDao;
+import com.genius.sch.loldata.database.BaseDao;
+import com.genius.sch.loldata.database.BaseDaoImpl;
 import com.genius.sch.loldata.entity.Champion;
 import com.genius.sch.loldata.entity.Faction;
 import com.genius.sch.loldata.view.ScollListView;
@@ -52,9 +52,9 @@ public class FactionDetailActivity extends BaseActivity {
         String name = intent.getStringExtra("factionName");
         getSupportActionBar().setTitle(name);
         tvChampionsTitle.setText(name + "地区的英雄们");
-        FactionDao dao = new FactionDao(context);
+        BaseDao<Faction, Integer> dao = new BaseDaoImpl<>(context, Faction.class);
         try {
-            faction = dao.queryT("name", name);
+            faction = dao.query("name", name).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,12 +62,12 @@ public class FactionDetailActivity extends BaseActivity {
         ivIcon.setImageDrawable(faction.getIcon(context));
         tvName.setText(faction.getName());
         tvIntroduce.setText(Html.fromHtml(faction.getIntroduce()));
-        ChampionDao championDao = new ChampionDao(context);
+        BaseDao<Champion, Integer> championDao = new BaseDaoImpl<>(context, Champion.class);
         final String champions[] = faction.getAssociatedChampions().split(";");
         championArrayList = new ArrayList<>();
         for (int i = 0; i < champions.length; i++) {
             try {
-                championArrayList.add(championDao.queryT("name", champions[i]));
+                championArrayList.add(championDao.query("name", champions[i]).get(0));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
