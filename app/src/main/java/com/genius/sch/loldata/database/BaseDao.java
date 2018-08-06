@@ -406,6 +406,22 @@ public abstract class BaseDao<T, Integer> {
     }
 
     /**
+     * 查，返回符合条件的第一个
+     * @param idName
+     * @param idValue
+     * @return
+     * @throws SQLException
+     */
+    public T queryT(String idName, String idValue) throws SQLException {
+        List<T> lst = query(idName, idValue);
+        if (null != lst && !lst.isEmpty()) {
+            return lst.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 查，带事务操作
      *
      * @param columnNames

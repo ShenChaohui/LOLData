@@ -54,7 +54,7 @@ public class FactionDetailActivity extends BaseActivity {
         tvChampionsTitle.setText(name + "地区的英雄们");
         BaseDao<Faction, Integer> dao = new BaseDaoImpl<>(context, Faction.class);
         try {
-            faction = dao.query("name", name).get(0);
+            faction = dao.queryT("name", name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class FactionDetailActivity extends BaseActivity {
         championArrayList = new ArrayList<>();
         for (int i = 0; i < champions.length; i++) {
             try {
-                championArrayList.add(championDao.query("name", champions[i]).get(0));
+                championArrayList.add(championDao.queryT("name", champions[i]));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
